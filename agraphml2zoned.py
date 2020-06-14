@@ -121,4 +121,4 @@ image_map_reshaped = np.array(image_map).reshape((length_zones, length_zones))
 # print(zcm_reshaped)
 
 img = Image.fromarray(image_map_reshaped, 'L').resize((200, 200))
-img.save(full_filename + '.png')
+img.save(full_filename + '_ZONED.png')
