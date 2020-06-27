@@ -9,8 +9,8 @@ from PIL import Image
 import config
 
 parser = ArgumentParser()
-parser.add_argument("-f", "--filename", dest="filename", required=True)
-parser.add_argument("-z", "--zoned", dest="zoned", action='store_true')
+parser.add_argument('-f', '--filename', dest='filename', required=True)
+parser.add_argument('-z', '--zoned', dest='zoned', action='store_true')
 args = parser.parse_args()
 
 IMG_SIZE = (200, 200)
@@ -45,7 +45,7 @@ for i in range(0, length):
     except IndexError:
         pass
     for j in range(0, length):
-        # initialize with "no connection"
+        # initialize with 'no connection'
         connection = 0.0
         id_to = ''
         try:

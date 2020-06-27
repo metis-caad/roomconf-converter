@@ -11,7 +11,7 @@ Missing python packages can be installed with `pip`:
 
 # Usage
 
-## Simple connetcion map
+## Simple connection map
 
 Convert an Agraphml to a simple connection map using room and edge types information only:
 
