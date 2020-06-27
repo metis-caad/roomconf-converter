@@ -28,3 +28,11 @@ For this map type, it is required that each room provides a `zone` attribute and
 `python3 agraphml2connmap.py -f <agraphml_with_zones_filename> -z`
 
 You will get a PNG with an original file name and `_ZONED.png` suffix as result.
+
+## Connection map as a sequence
+
+Convert an Agraphml to a connection map and then to a comma-separated sequence. Only existing (non-zero) conections will be available in the sequence.
+
+`python3 agraphml2sequence.py -f <agraphml_filename>`
+
+You will get a TXT with an original file name and `_SEQ.txt` suffix as result.

@@ -3,8 +3,6 @@ import sys
 import xml.etree.ElementTree as eT
 from argparse import ArgumentParser
 
-import numpy as np
-
 import config
 
 parser = ArgumentParser()
