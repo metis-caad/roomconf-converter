@@ -31,13 +31,13 @@ room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
 
 length = len(room_ids)
 connmap = []
-for i in range(0, length):
+for i in range(length):
     id_from = ''
     try:
         id_from = room_ids[i]
     except IndexError:
         pass
-    for j in range(0, length):
+    for j in range(length):
         id_to = ''
         try:
             id_to = room_ids[j]
