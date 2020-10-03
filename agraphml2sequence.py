@@ -1,5 +1,4 @@
 import os
-import sys
 import xml.etree.ElementTree as eT
 from argparse import ArgumentParser
 
@@ -20,9 +19,8 @@ def get_room_type(room_id, _graph):
 
 
 namespace = '{http://graphml.graphdrawing.org/xmlns}'
-dirname = os.path.dirname(os.path.realpath(sys.argv[0]))
 filename = args.filename
-full_filename = dirname + '/' + filename
+full_filename = os.path.abspath(filename)
 tree = eT.parse(full_filename)
 root = tree.getroot()
 graph = root[0]
