@@ -62,13 +62,13 @@ for i in range(length):
                     edge_number_code = config.edge_types[config.edge_type_codes[edge.find(namespace + 'data').text]]
                     if zoned:
                         try:
-                            connection = float('0.' + edge.get('sourceZone') + edge.get('targetZone')
-                                               + source_number_code + target_number_code + edge_number_code)
+                            connection = float('0.' + edge_number_code + edge.get('sourceZone') + edge.get('targetZone')
+                                               + source_number_code + target_number_code)
                         except TypeError:
                             print('ERROR: Zones could not be found for a room or an edge. No image will be produced.')
                             exit()
                     else:
-                        connection = float('0.' + source_number_code + target_number_code + edge_number_code)
+                        connection = float('0.' + edge_number_code + source_number_code + target_number_code)
         connmap.append(connection)
 
 assert len(connmap) == length * length

@@ -58,9 +58,9 @@ for i in range(length):
                     target_number_code = int(hashlib.md5(get_room_type(target_id, graph)).hexdigest(), 16)
                     edge_number_code = int(hashlib.md5(
                         edge.find(namespace + 'data').text.encode('utf-8')).hexdigest(), 16)
-                    conn_arr = ['0.' + str(source_number_code),
-                                '0.' + str(target_number_code),
-                                '0.' + str(edge_number_code)]
+                    conn_arr = [str(1 - (edge_number_code * 0.000001)),
+                                str(1 - (source_number_code * 0.000001)),
+                                str(1 - (target_number_code * 0.000001))]
                     connection = ','.join(conn_arr)
         connmap.append(connection)
 
