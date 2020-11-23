@@ -48,35 +48,35 @@ room_type_codes = {
 }
 
 room_types = {
-    'l': '11',  # living
-    's': '12',  # sleeping
-    'w': '13',  # working
-    'k': '14',  # kitchen
-    'c': '15',  # corridor
-    'b': '16',  # bath
-    't': '17',  # toilet
-    'h': '18',  # children
-    'g': '19',  # storage
-    'r': '21',  # room
-    'e': '22',  # exterior
-    'v': '23',  # buildingservices
-    'p': '24'  # parking
+    'l': '10',  # living
+    's': '15',  # sleeping
+    'w': '20',  # working
+    'k': '25',  # kitchen
+    'c': '30',  # corridor
+    'b': '35',  # bath
+    't': '40',  # toilet
+    'h': '45',  # children
+    'g': '50',  # storage
+    'r': '55',  # room
+    'e': '60',  # exterior
+    'v': '65',  # buildingservices
+    'p': '70'  # parking
 }
 
 room_code_numbers = {
-    '11': LIVING,
-    '12': SLEEPING,
-    '13': WORKING,
-    '14': KITCHEN,
-    '15': CORRIDOR,
-    '16': BATH,
-    '17': TOILET,
-    '18': CHILDREN,
-    '19': STORAGE,
-    '22': EXTERIOR,
-    '21': ROOM,
-    '23': BUILDINGSERVICES,
-    '24': PARKING
+    '10': LIVING,
+    '15': SLEEPING,
+    '20': WORKING,
+    '25': KITCHEN,
+    '30': CORRIDOR,
+    '35': BATH,
+    '40': TOILET,
+    '45': CHILDREN,
+    '50': STORAGE,
+    '55': EXTERIOR,
+    '60': ROOM,
+    '65': BUILDINGSERVICES,
+    '70': PARKING
 }
 
 edge_type_codes = {
@@ -91,25 +91,25 @@ edge_type_codes = {
 }
 
 edge_types = {
-    'd': '11',  # door
-    'p': '12',  # passage
-    'w': '13',  # wall
-    'r': '14',  # entrance
-    'b': '15',  # slab
-    's': '16',  # stairs
-    'n': '17',  # window
-    'e': '21'  # edge
+    'd': '10',  # door
+    'p': '15',  # passage
+    'w': '20',  # wall
+    'r': '25',  # entrance
+    'b': '30',  # slab
+    's': '35',  # stairs
+    'n': '40',  # window
+    'e': '45'  # edge
 }
 
 edge_code_numbers = {
-    '11': DOOR,
-    '12': PASSAGE,
-    '13': WALL,
-    '14': ENTRANCE,
-    '15': SLAB,
-    '16': STAIRS,
-    '17': WINDOW,
-    '21': EDGE
+    '10': DOOR,
+    '15': PASSAGE,
+    '20': WALL,
+    '25': ENTRANCE,
+    '30': SLAB,
+    '35': STAIRS,
+    '40': WINDOW,
+    '45': EDGE
 }
 
 all_zones = {
