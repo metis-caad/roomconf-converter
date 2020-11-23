@@ -1,23 +1,16 @@
-import os
-import sys
-import uuid
-import numpy as np
-import random
-
-
 def get_triples(path_or_connmap):
-    '''
-        Fetches the triples for a Text Connection Map 
-    
+    """
+        Fetches the triples for a Text Connection Map
+
         Parameter:
         ----------
         path_or_connmap: The path or the text connection map itself
-        
+
         Returns:
         --------
         A list of triples for each room in the Connection Map
-    
-    '''
+
+    """
     triples = []
     lines = []
     if str(path_or_connmap).startswith('['):
@@ -44,19 +37,20 @@ def get_triples(path_or_connmap):
         triples.append(t1)
     return triples
 
+
 def get_guids(path_or_connmap):
-    '''
-        Fetches the GUIDS for a Text Connection Map based on the number of unique edge sources 
-    
+    """
+        Fetches the GUIDS for a Text Connection Map based on the number of unique edge sources
+
         Parameter:
         ----------
         path_or_connmap: The path or the text connection map itself
-        
+
         Returns:
         --------
         A list of GUIDS for each unique source in the Connection Map
-    
-    '''
+
+    """
     guids = []
     lines = []
     if str(path_or_connmap).startswith('['):
@@ -70,7 +64,7 @@ def get_guids(path_or_connmap):
             for s1 in splitted_1:
                 t2 = []
                 splitted_2 = s1.split('], [')
-                count=0
+                count = 0
                 for s2 in splitted_2:
                     count += 1
                     t3 = []
@@ -80,7 +74,7 @@ def get_guids(path_or_connmap):
                         t2.append(source)
                     for s3 in splitted_3:
                         if s3.startswith('['):
-                            s3 = s3.strip('[') 
+                            s3 = s3.strip('[')
                         elif s2.endswith(']]'):
                             s3 = s3.strip(']]')
                         s4 = s3.strip('\'')
