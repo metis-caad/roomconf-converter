@@ -2,9 +2,10 @@ import os
 import sys
 import xml.etree.ElementTree as eT
 from argparse import ArgumentParser
+import json
+from json import JSONEncoder
 
 import numpy as np
-from PIL import Image
 
 import config
 
@@ -12,7 +13,12 @@ parser = ArgumentParser()
 parser.add_argument('-f', '--filename', dest='filename', required=True)
 args = parser.parse_args()
 
-IMG_SIZE = (200, 200)
+
+class NumpyArrayEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
 
 
 def get_room_type(room_id, _graph):
@@ -90,7 +96,20 @@ assert len(connmap) == length * length
 
 connmap_arr = np.array(connmap).reshape((length, length))
 
-print(connmap_arr)
+# print(connmap_arr)
 
-# img = Image.fromarray(connmap_arr, 'L').resize(IMG_SIZE)
-# img.save(full_filename + '.png')
+numpyData = {"array": connmap_arr}
+encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
+with open(full_filename + '_onehot.json', 'w') as onehot_json_file:
+    json.dump(encodedNumpyData, onehot_json_file)
+
+# print("Printing JSON serialized NumPy array")
+# print(encodedNumpyData)
+#
+# # Deserialization
+# print("Decode JSON serialized NumPy array")
+# decodedArrays = json.loads(encodedNumpyData)
+#
+# finalNumpyArray = np.asarray(decodedArrays["array"])
+# print("NumPy Array")
+# print(finalNumpyArray)
