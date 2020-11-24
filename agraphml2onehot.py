@@ -47,10 +47,21 @@ def one_hot_vector(ind, size):
 def get_vector(entity_type, category):
     if category == 'room':
         ind = room_types_sorted.index(str(entity_type).upper())
-        return one_hot_vector(ind, len(room_types_sorted))
+        # return one_hot_vector(ind, len(room_types_sorted))
     else:
         ind = edge_types_sorted.index(str(entity_type).upper())
-        return one_hot_vector(ind, len(edge_types_sorted))
+        # return one_hot_vector(ind, len(edge_types_sorted))
+    return one_hot_vector(ind, len(room_types_sorted))  # to ensure arrays of the same length as required by Tensorflow
+
+
+def get_empty_connection():
+    conn = []
+    for ii in range(3):
+        vect = []
+        for jj in range(len(room_types_sorted)):
+            vect.append(0.0)
+        conn.append(vect)
+    return conn
 
 
 namespace = '{http://graphml.graphdrawing.org/xmlns}'
@@ -63,7 +74,7 @@ graph = root[0]
 
 room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
 
-length = len(room_ids)
+length = 50  # len(room_ids)
 connmap = []
 for i in range(length):
     id_from = ''
@@ -73,13 +84,13 @@ for i in range(length):
         pass
     for j in range(length):
         # initialize with 'no connection'
-        connection = []
+        connection = get_empty_connection()
         id_to = ''
         try:
             id_to = room_ids[j]
         except IndexError:
             pass
-        if id_from != id_to:
+        if id_from != id_to and not (id_from == '' and id_to == ''):
             for edge in graph.findall(namespace + 'edge'):
                 source_id = edge.get('source')
                 target_id = edge.get('target')
@@ -87,16 +98,16 @@ for i in range(length):
                     source_vector = get_vector(get_room_type(room_ids[i], graph), 'room')
                     target_vector = get_vector(get_room_type(target_id, graph), 'room')
                     edge_vector = get_vector(edge.find(namespace + 'data').text, 'edge')
-                    connection.append(source_vector)
-                    connection.append(target_vector)
-                    connection.append(edge_vector)
+                    connection = [source_vector, target_vector, edge_vector]
         connmap.append(connection)
 
 assert len(connmap) == length * length
 
-connmap_arr = np.array(connmap).reshape((length, length))
+# print(connmap)
 
-# print(connmap_arr)
+connmap_arr = np.array(connmap)  # .reshape((length, length))
+
+# print(len(connmap_arr[0]))
 
 numpyData = {"array": connmap_arr}
 encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
