@@ -1,13 +1,23 @@
+import hashlib
+import json
 import os
 import sys
 import xml.etree.ElementTree as eT
 from argparse import ArgumentParser
+from json import JSONEncoder
 
 import numpy as np
 
 parser = ArgumentParser()
 parser.add_argument('-f', '--filename', dest='filename', required=True)
 args = parser.parse_args()
+
+
+class NumpyArrayEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
 
 
 # To be use in the Notebook for function Call   
@@ -31,7 +41,8 @@ tree = eT.parse(full_filename)
 root = tree.getroot()
 graph = root[0]
 room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
-length = len(room_ids)
+
+length = 50  # len(room_ids)
 connmap = []
 triples = []
 for i in range(0, length):
@@ -42,8 +53,7 @@ for i in range(0, length):
     except IndexError:
         pass
     for j in range(0, length):
-
-        connection = 'no connection'  # initialize eaach connection with "no connection"
+        connection = float('0.' + str(int(hashlib.md5('no connection'.encode('utf-8')).hexdigest(), 16)))
         triple = ['', '', None]
         id_to = ''
         try:
@@ -58,7 +68,8 @@ for i in range(0, length):
                     source = find_room_type(room_ids[i], graph, namespace).lower()
                     target = find_room_type(target_id, graph, namespace).lower()
                     edge = edge.find(namespace + 'data').text.lower()
-                    connection = str(source + ' ' + 'connects with' + ' ' + target + ' ' + 'using' + ' ' + edge)
+                    connection_str = str(source + ' ' + 'connects with' + ' ' + target + ' ' + 'using' + ' ' + edge)
+                    connection = float('0.' + str(int(hashlib.md5(connection_str.encode('utf-8')).hexdigest(), 16)))
                     triple = [id_from, id_to, edge]
         connmap.append(connection)
         triple_row.append(triple)
@@ -66,7 +77,10 @@ for i in range(0, length):
     triples.append(triple_row)
 assert len(connmap) == length * length
 assert len(triples) == length
-connmap = np.array(connmap)
+connmap_arr = np.array(connmap).reshape((length, length))
 
-with open(full_filename + '_text.map', 'w') as query_map_file:
-    query_map_file.write(np.array2string(connmap).replace('\n', ''))
+
+numpyData = {"array": connmap_arr}
+encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
+with open(full_filename + '_text.map', 'w') as json_file:
+    json.dump(encodedNumpyData, json_file)
