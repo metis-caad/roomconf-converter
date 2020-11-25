@@ -53,7 +53,7 @@ for i in range(0, length):
     except IndexError:
         pass
     for j in range(0, length):
-        connection = float('0.' + str(int(hashlib.md5('no connection'.encode('utf-8')).hexdigest(), 16)))
+        connection = [float('0.' + str(int(hashlib.md5('no connection'.encode('utf-8')).hexdigest(), 16)))]
         triple = ['', '', None]
         id_to = ''
         try:
@@ -69,7 +69,7 @@ for i in range(0, length):
                     target = find_room_type(target_id, graph, namespace).lower()
                     edge = edge.find(namespace + 'data').text.lower()
                     connection_str = str(source + ' ' + 'connects with' + ' ' + target + ' ' + 'using' + ' ' + edge)
-                    connection = float('0.' + str(int(hashlib.md5(connection_str.encode('utf-8')).hexdigest(), 16)))
+                    connection = [float('0.' + str(int(hashlib.md5(connection_str.encode('utf-8')).hexdigest(), 16)))]
                     triple = [id_from, id_to, edge]
         connmap.append(connection)
         triple_row.append(triple)
@@ -77,8 +77,7 @@ for i in range(0, length):
     triples.append(triple_row)
 assert len(connmap) == length * length
 assert len(triples) == length
-connmap_arr = np.array(connmap).reshape((length, length))
-
+connmap_arr = np.asarray([connmap])  # .reshape((length, length))
 
 numpyData = {"array": connmap_arr}
 encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
