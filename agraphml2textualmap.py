@@ -42,7 +42,7 @@ root = tree.getroot()
 graph = root[0]
 room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
 
-length = 50  # len(room_ids)
+length = 20  # len(room_ids)
 connmap = []
 triples = []
 for i in range(0, length):

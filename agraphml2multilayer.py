@@ -39,7 +39,7 @@ graph = root[0]
 
 room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
 
-length = 50  # len(room_ids)
+length = 20  # len(room_ids)
 connmap = []
 for i in range(length):
     id_from = ''
@@ -71,7 +71,7 @@ for i in range(length):
 
 assert len(connmap) == length * length
 
-connmap_arr = np.array(connmap)  # .reshape((length, length))
+connmap_arr = np.asarray(connmap)  # .reshape((length, length))
 
 numpyData = {"array": connmap_arr}
 encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
