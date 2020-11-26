@@ -1,8 +1,10 @@
 import hashlib
+import json
 import os
 import sys
 import xml.etree.ElementTree as eT
 from argparse import ArgumentParser
+from json import JSONEncoder
 
 import numpy as np
 from PIL import Image
@@ -12,6 +14,13 @@ parser.add_argument('-f', '--filename', dest='filename', required=True)
 args = parser.parse_args()
 
 IMG_SIZE = (200, 200)
+
+
+class NumpyArrayEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
 
 
 def get_room_type(room_id, _graph):
@@ -33,7 +42,7 @@ graph = root[0]
 
 room_ids = [room.get('id') for room in graph.findall(namespace + 'node')]
 
-length = len(room_ids)
+length = 50  # len(room_ids)
 connmap = []
 for i in range(length):
     id_from = ''
@@ -43,7 +52,7 @@ for i in range(length):
         pass
     for j in range(length):
         # initialize with 'no connection'
-        connection = '1.0,1.0,1.0'
+        connection = [0.0, 0.0, 0.0]
         id_to = ''
         try:
             id_to = room_ids[j]
@@ -58,32 +67,36 @@ for i in range(length):
                     target_number_code = int(hashlib.md5(get_room_type(target_id, graph)).hexdigest(), 16)
                     edge_number_code = int(hashlib.md5(
                         edge.find(namespace + 'data').text.encode('utf-8')).hexdigest(), 16)
-                    conn_arr = [str(1 - float('0.' + str(edge_number_code))),
-                                str(1 - float('0.' + str(source_number_code))),
-                                str(1 - float('0.' + str(target_number_code)))]
-                    connection = ','.join(conn_arr)
+                    connection = [1 - float('0.' + str(edge_number_code)),
+                                  1 - float('0.' + str(source_number_code)),
+                                  1 - float('0.' + str(target_number_code))]
+                    # connection = ','.join(conn_arr)
         connmap.append(connection)
 
 assert len(connmap) == length * length
 
-connmap_arr = np.array(connmap).reshape((length, length))
+connmap_arr = np.array(connmap)  # .reshape((length, length))
 
-# print(connmap_arr)
+numpyData = {"array": connmap_arr}
+encodedNumpyData = json.dumps(numpyData, cls=NumpyArrayEncoder)
+with open(full_filename + '_multilayer.connmap', 'w') as onehot_json_file:
+    json.dump(encodedNumpyData, onehot_json_file)
 
-connmap_arr_3d = []
-for j in range(length):
-    row = connmap_arr[j]
-    row_3d = []
-    for conn in row:
-        conn_splitted = str(conn).split(',')
-        conn_3d = []
-        for k in range(len(conn_splitted)):
-            value = float(conn_splitted[k])
-            conn_3d.append(value)
-        row_3d.append(conn_3d)
-    connmap_arr_3d.append(row_3d)
 
-# print(connmap_arr_3d)
-
-img = Image.fromarray(np.array(connmap_arr_3d), 'RGB').resize(IMG_SIZE)
-img.save(full_filename + '_MULTI.png')
+# connmap_arr_3d = []
+# for j in range(length):
+#     row = connmap_arr[j]
+#     row_3d = []
+#     for conn in row:
+#         conn_splitted = str(conn).split(',')
+#         conn_3d = []
+#         for k in range(len(conn_splitted)):
+#             value = float(conn_splitted[k])
+#             conn_3d.append(value)
+#         row_3d.append(conn_3d)
+#     connmap_arr_3d.append(row_3d)
+#
+# # print(connmap_arr_3d)
+#
+# img = Image.fromarray(np.array(connmap_arr_3d), 'RGB').resize(IMG_SIZE)
+# img.save(full_filename + '_MULTI.png')
