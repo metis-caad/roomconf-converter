@@ -3,6 +3,8 @@
 *onehot.json
 *_SEQ.txt
 *.DS_Store
+selected_adapted_test/
+queries/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
