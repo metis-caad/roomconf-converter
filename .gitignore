@@ -5,6 +5,8 @@
 *.DS_Store
 selected_adapted_test/
 queries/
+final_dataset/
+test_agraphmls/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
