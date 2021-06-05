@@ -85,9 +85,11 @@ else:
     for row in connmap_arr:
         for val in row:
             if val > 0.:
-                zones = str(val)[2:4]
-                room1 = str(val)[4:6]
-                room2 = str(val)[6:8]
+                zones = str(val)[4:6]
+                room1 = str(val)[6:8]
+                room2 = str(val)[8:]
+                if len(room2) == 1:
+                    room2 += '0'
                 if zones not in connmap_dict:
                     connmap_dict[zones] = [room1, room2]
                 else:
