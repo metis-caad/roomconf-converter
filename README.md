@@ -29,6 +29,30 @@ For this map type, it is required that each room provides a `zone` attribute and
 
 You will get a PNG with an original file name and `_ZONED.png` suffix as result.
 
+## Multilayer connection map
+
+Convert an Agraphml to a multilayer connection map with source, target, and connection type layers.
+
+`python3 agraphml2multilayer.py -f <agraphml_filename>`
+
+You will get a text file with an original file name and `_multilayer.connmap` suffix as result.
+
+## One-hot encoded connection map
+
+Convert an Agraphml to a connection map in the form of one-hot vector triples for source, target, and connection type.
+
+`python3 agraphml2onehot.py -f <agraphml_filename>`
+
+You will get a JSON file with an original file name and `_onehot.json` suffix as result.
+
+## Textual connection map
+
+Convert an Agraphml to a connection map in the form of textual expressions for source, target, and connection type.
+
+`python3 agraphml2textualmap.py -f <agraphml_filename>`
+
+You will get a JSON file with an original file name and `_onehot.json` suffix as result.
+
 ## Connection map as a sequence
 
 Convert an Agraphml to a connection map and then to a comma-separated sequence. Only existing (non-zero) conections will be available in the sequence.
