@@ -1,6 +1,8 @@
 # roomconf-converter
 Converts architectural spatial configurations in the AGraphML format to tensor-based connection maps for deep learning.
 
+You can create an Agraphml-based room configuration, for example, using the [RoomConf Editor](https://github.com/cenetp/roomconf-editor).
+
 The converter is published in the context of the paper ["Exploring optimal ways to represent topological and spatial features of building designs in deep learning methods and applications for architecture"](http://papers.cumincad.org/cgi-bin/works/paper/caadria2021_086) submitted and presented @ [CAADRIA 2021](https://caadria2021.org/).
 
 The research is part of the [metis-II](https://www.ar.tum.de/en/ai/research/artificial-intelligence/ksd-research-group/funded-projects/) project by DFKI and TUM.
