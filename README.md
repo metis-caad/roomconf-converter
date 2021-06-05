@@ -55,12 +55,4 @@ Convert an Agraphml to a connection map in the form of textual expressions for s
 
 `python3 agraphml2textualmap.py -f <agraphml_filename>`
 
-You will get a JSON file with an original file name and `_onehot.json` suffix as result.
-
-## Connection map as a sequence
-
-Convert an Agraphml to a connection map and then to a comma-separated sequence. Only existing (non-zero) conections will be available in the sequence.
-
-`python3 agraphml2sequence.py -f <agraphml_filename>`
-
-You will get a TXT with an original file name and `_SEQ.txt` suffix as result.
+You will get a text file with an original file name and `_text.map` suffix as result.

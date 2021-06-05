@@ -1,4 +1,5 @@
 *.map
+*.connmap
 *.png
 *onehot.json
 *_SEQ.txt
